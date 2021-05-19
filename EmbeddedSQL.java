@@ -9,6 +9,7 @@
  * Target DBMS: 'Postgres'
  *
  */
+                            
 
 
 import java.sql.DriverManager;
@@ -249,39 +250,99 @@ public class EmbeddedSQL {
    }//end QueryExample
    
    public static void Query1(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+      try{
+		  String query = "select COUNT(*)FROM suppliers;";
+		  int count = esql.executeQuery(query);
+		  System.out.println ("total number of parts supplied by each supplier" + count);
+		}catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	  
    }//end Query1
 
    public static void Query2(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+     try{
+		  String query = "select count(sid) from catalog GROUP BY sid having count(*) > 2;";
+		  int count = esql.executeQuery(query);
+		  System.out.println ("total number of parts supplied by each supplier who supplies at least 3 parts." + count);
+		}catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	  
    }//end Query2
 
    public static void Query3(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+      try{
+		  String query = "SELECT suppliers.sname, COUNT(*) as PartCount FROM suppliers , catalog , parts  WHERE catalog.sid = suppliers.sid and parts.pid = catalog.pid and parts.color = 'Green' GROUP BY suppliers.sname, suppliers.sid;";
+		  ResultSet rs = stmt.executeQuery(query);
+		  System.out.println ("every supplier that supplies only green parts" + count);
+		}catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	    
+	 while (rs.next ()) {
+	for (int i=1; i<=numCol; ++i)
+	System.out.println (rs.getColumnName (i) + " = " + rs.getString (i));
+	System.out.println ();
+	++rowCount;
+ }
+	  
    }//end Query3
 
    public static void Query4(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+      try{
+		  String query = "create view temp2 as SELECT DISTINCT catalog.sid  FROM catalog, parts WHERE catalog.pid = parts.pid AND parts.color like 'Red%' INTERSECT SELECT DISTINCT catalog.sid FROM catalog catalog, Parts P1 WHERE catalog.pid=P1.pid AND P1.color like 'Green%'; SELECT suppliers.sname,Max(catalog.cost) from temp2, catalog ,suppliers  where temp2.sid=catalog.sid and catalog.sid=suppliers.sid GROUP BY suppliers.sname;";
+		  ResultSet rs = stmt.executeQuery(query);
+		  System.out.println ("every supplier that supplies only green parts" + count);
+		}catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	    
+	 while (rs.next ()) {
+	for (int i=1; i<=numCol; ++i)
+	System.out.println (rs.getColumnName (i) + " = " + rs.getString (i));
+	System.out.println ();
+	++rowCount;
+ }
    }//end Query4
 
    public static void Query5(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+       try{
+         String query = "SELECT parts.pname FROM parts, catalogWHERE parts.pid = catalog.pid and catalog.cost < ;";
+";
+         System.out.print("\tEnter cost: $");
+         String input = in.readLine();
+         query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	  while (rs.next ()) {
+	for (int i=1; i<=numCol; ++i)
+	System.out.println (rs.getColumnName (i) + " = " + rs.getString (i));
+	System.out.println ();
+	++rowCount;
    }//end Query5
 
    public static void Query6(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+      try{
+         String query = "select address from suppliers, parts, catalog where suppliers.sid = catalog.sid and parts.pid = catalog.pid and parts.pname = ;";
+         System.out.print("\tEnter address: ");
+         String input = in.readLine();
+         query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	  while (rs.next ()) {
+	for (int i=1; i<=numCol; ++i)
+	System.out.println (rs.getColumnName (i) + " = " + rs.getString (i));
+	System.out.println ();
+	++rowCount;
    }//end Query6
 
 }//end EmbeddedSQL
