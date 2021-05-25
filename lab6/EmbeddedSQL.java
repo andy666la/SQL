@@ -255,11 +255,10 @@ public class EmbeddedSQL {
 
    }
    public static void Query6(EmbeddedSQL esql){
-      try{
-	   String query = "SELECT suppliers.address FROM suppliers, parts, catalog WHERE suppliers.sid = catalog.sid AND parts.pid = catalog.pid AND parts.pname = ";
+       try{
 	   System.out.print("\tEnter suppliers parts Name: ");
 	   String input = in.readLine();
-	   query += input;
+	   String query = "SELECT suppliers.address FROM suppliers, parts, catalog WHERE suppliers.sid = catalog.sid AND parts.pid = catalog.pid AND parts.pname = \'" + input + " \'";
 	   int output = esql.executeQuery(query);
 	   System.out.println ("total row(s): " + output);
        }
